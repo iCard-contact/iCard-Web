@@ -12,6 +12,7 @@
       --bg1:#070b18;
       --text:#f9fafb;
       --muted:#a6b0c3;
+      --muted2:#7c879b;
       --stroke:rgba(148,163,184,.18);
       --radius:22px;
       --max:1120px;
@@ -35,18 +36,16 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:var(--max);margin:0 auto;padding:0 20px}
 
-    /* IMPORTANT: l'overlay ne doit JAMAIS recouvrir le contenu */
+    /* Overlay bruit : sous le contenu */
     .noise{
       pointer-events:none;
       position:fixed;inset:0;
       opacity:.06;
       mix-blend-mode:overlay;
-      z-index:0; /* <-- sous le contenu */
+      z-index:0;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
       background-size:180px 180px;
     }
-
-    /* Tout le contenu au-dessus de l'overlay */
     .page{position:relative;z-index:1}
 
     /* NAV */
@@ -58,13 +57,27 @@
     }
     .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.01em}
-    .logo-mark{
-      width:34px;height:34px;border-radius:12px;
-      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), rgba(255,255,255,.06)),
-                  linear-gradient(135deg, rgba(124,58,237,.95), rgba(37,99,235,.92));
+    .brand span{font-size:16px}
+
+    /* LOGO IMG */
+    .logo-img{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      object-fit:contain;
+      background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.18);
-      box-shadow:0 16px 40px rgba(124,58,237,.25);
+      padding:6px;
+      box-shadow:0 16px 40px rgba(0,0,0,.25);
     }
+    .footer-logo{
+      width:30px;
+      height:30px;
+      border-radius:10px;
+      padding:5px;
+      box-shadow:none;
+    }
+
     .nav-links{display:flex;gap:18px;align-items:center;color:var(--muted);font-size:14px}
     .nav-links a{padding:8px 10px;border-radius:999px}
     .nav-links a:hover{background:rgba(255,255,255,.06);color:var(--text)}
@@ -122,7 +135,7 @@
     }
     .lead{margin-top:14px;color:var(--muted);font-size:16px;line-height:1.6;max-width:58ch}
     .hero-actions{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .hero-stats{margin-top:18px;display:flex;gap:18px;flex-wrap:wrap;color:#7c879b;font-size:13px}
+    .hero-stats{margin-top:18px;display:flex;gap:18px;flex-wrap:wrap;color:var(--muted2);font-size:13px}
     .hero-stats b{color:var(--text)}
     .card{
       border-radius:var(--radius);
@@ -207,6 +220,8 @@
       font-size:13px;
     }
     .foot{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .foot a{color:var(--muted)}
+    .foot a:hover{color:var(--text)}
 
     @media (max-width: 920px){
       .hero-wrap{grid-template-columns:1fr}
@@ -224,7 +239,8 @@
     <div class="nav">
       <div class="container nav-inner">
         <a class="brand" href="#top" aria-label="iCard">
-          <span class="logo-mark" aria-hidden="true"></span>
+          <!-- LOGO -->
+          <img src="5.png" alt="iCard" class="logo-img">
           <span>iCard</span>
         </a>
 
@@ -322,10 +338,108 @@
       </div>
     </section>
 
+    <!-- DEMO (placeholder) -->
+    <section id="demo" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Démo</h2>
+            <p>Ajoute ici des liens vers tes pages contact (ex : Berenkan, Emre, etc.).</p>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px">
+          <div class="feat">
+            <h3>Exemple page contact</h3>
+            <p>Montre une page iCard réelle avec photo, bouton VCF, etc.</p>
+            <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+              <a class="btn btn-primary" href="#contact"><span class="dot"></span> Créer la mienne</a>
+              <a class="btn" href="#tarifs">Voir les packs</a>
+            </div>
+          </div>
+          <div class="feat">
+            <h3>Exemple carte NFC</h3>
+            <p>Explique la carte, la matière, la personnalisation, et la mise en place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING (placeholder) -->
+    <section id="tarifs" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Tarifs</h2>
+            <p>Remplace ces prix par tes vrais packs.</p>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:18px">
+          <div class="feat">
+            <h3>Starter</h3>
+            <p style="color:var(--muted);margin-top:8px">Carte NFC + page simple.</p>
+            <p style="margin-top:12px;font-size:28px;font-weight:800">29€</p>
+            <div style="margin-top:14px">
+              <a class="btn btn-primary" href="#contact"><span class="dot"></span> Demander</a>
+            </div>
+          </div>
+
+          <div class="feat" style="border-color:rgba(124,58,237,.35);background:rgba(124,58,237,.10)">
+            <h3>Pro</h3>
+            <p style="color:var(--muted);margin-top:8px">Carte NFC + VCF + design premium.</p>
+            <p style="margin-top:12px;font-size:28px;font-weight:800">49€</p>
+            <div style="margin-top:14px">
+              <a class="btn btn-primary" href="#contact"><span class="dot"></span> Demander</a>
+            </div>
+          </div>
+
+          <div class="feat">
+            <h3>Entreprise</h3>
+            <p style="color:var(--muted);margin-top:8px">Multi-profils, charte graphique, support.</p>
+            <p style="margin-top:12px;font-size:28px;font-weight:800">Sur devis</p>
+            <div style="margin-top:14px">
+              <a class="btn" href="#contact">Parler au support</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (placeholder) -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Contact</h2>
+            <p>Ajoute ici ton email pro (ex : contact@icardgroup.fr) et un formulaire plus tard.</p>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px">
+          <div class="feat">
+            <h3>Demander un devis</h3>
+            <p>Envoie un message par email, et je te réponds rapidement.</p>
+            <div style="margin-top:14px">
+              <a class="btn btn-primary" href="mailto:contact@icardgroup.fr"><span class="dot"></span> Email direct</a>
+            </div>
+          </div>
+          <div class="feat">
+            <h3>Informations</h3>
+            <p style="color:var(--muted);line-height:1.8;margin-top:10px">
+              <b style="color:var(--text)">Domaine :</b> icardgroup.fr<br>
+              <b style="color:var(--text)">Support :</b> contact@icardgroup.fr
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer>
       <div class="container foot">
         <div style="display:flex;gap:10px;align-items:center">
-          <span class="logo-mark" aria-hidden="true" style="width:28px;height:28px;border-radius:10px"></span>
+          <img src="5.png" alt="iCard" class="logo-img footer-logo">
           <span>© iCard</span>
         </div>
         <div style="display:flex;gap:14px;flex-wrap:wrap">
