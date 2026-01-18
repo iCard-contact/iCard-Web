@@ -3,10 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>iCard</title>
-</head>
-<body>
-  <h1>iCard</h1>
-  <p>Site en cours de création.</p>
-</body>
-</html>
+  <title>iCard — Cartes de visite NFC</title>
+  <meta name="description" content="iCard — Cartes de visite NFC & pages contact. Un tap, vos coordonnées, partout." />
+
+  <style>
+    :root{
+      --bg0:#050814;
+      --bg1:#070b18;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.09);
+      --stroke:rgba(148,163,184,.22);
+      --text:#f9fafb;
+      --muted:#a6b0c3;
+      --muted2:#7c879b;
+      --accent:#7c3aed;   /* violet premium */
+      --accent2:#22c55e;  /* vert "NFC/ok" */
+      --accent3:#2563eb;  /* bleu tech */
+      --shadow:0 28px 70px rgba(0,0,0,.55);
+      --radius:22px;
+      --max:1120px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 600px at 20% -10%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 520px at 80% 0%, rgba(37,99,235,.28), transparent 60%),
+        radial-gradient(800px 520px at 50% 110%, rgba(34,197,94,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button{font:inherit}
+
+    /* Layout helpers */
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+    .section{padding:84px 0}
+    .grid{display:grid;gap:18px}
+
+    /* Subtle noise overlay (premium effect) */
+    .noise{
+      pointer-events:none;
+      position:fixed;inset:0;opacity:.06;mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+      background-size:180px 180px;
+    }
+
+    /* Nav */
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(5,8,20,.55);
+      border-bottom:1px solid rgba(148,163,184,.12);
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:700;letter-spacing:.01em;
+    }
+    .logo-mark{
+      width:34px;height:34px;border-radius:12px;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), rgba(255,255,255,.06)),
+                  linear-gradient(135deg, rgba(124,58,237,.9), rgba(37,99,235,.85));
+      box-shadow:0 16px 40px rgba(124,58,237,.25);
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .nav-links{
+      display:flex;gap:18px;align-items:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .nav-links a{padding:8px 10px;border-radius:999px}
+    .nav-links a:hover{background:rgba(255,255,255,.06);color:var(--text)}
+
+    .nav-cta{
+      display:flex;gap:10px;align-items:center;
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      gap:10px;
+      padding:11px 14px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      transition:transform .15s ease, background .15s ease, border-color .15s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22)}
+    .btn-primary{
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(37,99,235,.92));
+      box-shadow: 0 20px 55px rgba(37,99,235,.22), 0 16px 45px rgba(124,58,237,.18);
+    }
+    .btn-primary:hover{background: linear-gradient(135deg, rgba(124,58,237,1), rgba(37,99,235,1))}
+    .btn-secondary{
+      background:rgba(255,255,255,.03);
+    }
+    .btn .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent2));
+      box-shadow:0 0 14px rgba(34,197,94,.6);
+    }
+
+    /* Hero */
+    .hero{padding:62px 0 24px}
+    .hero-wrap{
+      display:grid;grid-template-columns: 1.25fr .75fr;
+      gap:24px;align-items:stretch;
+    }
+    .kicker{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid rgba(148,163,184,.18);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+      width:fit-content;
+    }
+    .kicker .pill{
+      p
