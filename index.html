@@ -10,24 +10,20 @@
     :root{
       --bg0:#050814;
       --bg1:#070b18;
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.09);
-      --stroke:rgba(148,163,184,.22);
       --text:#f9fafb;
       --muted:#a6b0c3;
-      --muted2:#7c879b;
-      --accent:#7c3aed;   /* violet premium */
-      --accent2:#22c55e;  /* vert "NFC/ok" */
-      --accent3:#2563eb;  /* bleu tech */
-      --shadow:0 28px 70px rgba(0,0,0,.55);
+      --stroke:rgba(148,163,184,.18);
       --radius:22px;
       --max:1120px;
+      --accent:#7c3aed;
+      --accent3:#2563eb;
+      --accent2:#22c55e;
+      --shadow:0 28px 70px rgba(0,0,0,.55);
     }
-
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
       color:var(--text);
       background:
         radial-gradient(1000px 600px at 20% -10%, rgba(124,58,237,.35), transparent 60%),
@@ -36,102 +32,309 @@
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
-
     a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    button{font:inherit}
-
-    /* Layout helpers */
     .container{max-width:var(--max);margin:0 auto;padding:0 20px}
-    .section{padding:84px 0}
-    .grid{display:grid;gap:18px}
 
-    /* Subtle noise overlay (premium effect) */
+    /* IMPORTANT: l'overlay ne doit JAMAIS recouvrir le contenu */
     .noise{
       pointer-events:none;
-      position:fixed;inset:0;opacity:.06;mix-blend-mode:overlay;
+      position:fixed;inset:0;
+      opacity:.06;
+      mix-blend-mode:overlay;
+      z-index:0; /* <-- sous le contenu */
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
       background-size:180px 180px;
     }
 
-    /* Nav */
+    /* Tout le contenu au-dessus de l'overlay */
+    .page{position:relative;z-index:1}
+
+    /* NAV */
     .nav{
       position:sticky;top:0;z-index:50;
       backdrop-filter: blur(14px);
       background: rgba(5,8,20,.55);
       border-bottom:1px solid rgba(148,163,184,.12);
     }
-    .nav-inner{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 0;
-    }
-    .brand{
-      display:flex;align-items:center;gap:10px;
-      font-weight:700;letter-spacing:.01em;
-    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.01em}
     .logo-mark{
       width:34px;height:34px;border-radius:12px;
       background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), rgba(255,255,255,.06)),
-                  linear-gradient(135deg, rgba(124,58,237,.9), rgba(37,99,235,.85));
-      box-shadow:0 16px 40px rgba(124,58,237,.25);
+                  linear-gradient(135deg, rgba(124,58,237,.95), rgba(37,99,235,.92));
       border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 16px 40px rgba(124,58,237,.25);
     }
-    .nav-links{
-      display:flex;gap:18px;align-items:center;
-      color:var(--muted);
-      font-size:14px;
-    }
+    .nav-links{display:flex;gap:18px;align-items:center;color:var(--muted);font-size:14px}
     .nav-links a{padding:8px 10px;border-radius:999px}
     .nav-links a:hover{background:rgba(255,255,255,.06);color:var(--text)}
+    .nav-cta{display:flex;gap:10px;align-items:center}
 
-    .nav-cta{
-      display:flex;gap:10px;align-items:center;
-    }
-
-    /* Buttons */
+    /* BTN */
     .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      gap:10px;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
       padding:11px 14px;border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
       background:rgba(255,255,255,.06);
       color:var(--text);
-      font-weight:600;
-      font-size:14px;
+      font-weight:650;font-size:14px;
       cursor:pointer;
       transition:transform .15s ease, background .15s ease, border-color .15s ease;
       white-space:nowrap;
     }
     .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22)}
     .btn-primary{
-      border:1px solid rgba(255,255,255,.16);
       background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(37,99,235,.92));
+      border-color:rgba(255,255,255,.16);
       box-shadow: 0 20px 55px rgba(37,99,235,.22), 0 16px 45px rgba(124,58,237,.18);
     }
-    .btn-primary:hover{background: linear-gradient(135deg, rgba(124,58,237,1), rgba(37,99,235,1))}
-    .btn-secondary{
-      background:rgba(255,255,255,.03);
-    }
-    .btn .dot{
+    .dot{
       width:10px;height:10px;border-radius:999px;
       background: radial-gradient(circle at 30% 30%, #fff, var(--accent2));
       box-shadow:0 0 14px rgba(34,197,94,.6);
     }
 
-    /* Hero */
-    .hero{padding:62px 0 24px}
-    .hero-wrap{
-      display:grid;grid-template-columns: 1.25fr .75fr;
-      gap:24px;align-items:stretch;
-    }
+    /* HERO */
+    header.hero{padding:62px 0 24px}
+    .hero-wrap{display:grid;grid-template-columns: 1.25fr .75fr;gap:24px;align-items:stretch}
     .kicker{
       display:inline-flex;align-items:center;gap:10px;
       padding:8px 12px;border-radius:999px;
       border:1px solid rgba(148,163,184,.18);
       background:rgba(255,255,255,.04);
       color:var(--muted);
-      font-size:13px;
       width:fit-content;
+      font-size:13px;
     }
-    .kicker .pill{
-      p
+    .pill{
+      padding:4px 10px;border-radius:999px;
+      background:rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.28);
+      color:#bff7d3;
+      font-size:12px;
+      letter-spacing:.02em;
+    }
+    h1{
+      margin-top:14px;
+      font-size:clamp(34px,4.2vw,54px);
+      line-height:1.05;
+      letter-spacing:-.02em;
+    }
+    .lead{margin-top:14px;color:var(--muted);font-size:16px;line-height:1.6;max-width:58ch}
+    .hero-actions{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .hero-stats{margin-top:18px;display:flex;gap:18px;flex-wrap:wrap;color:#7c879b;font-size:13px}
+    .hero-stats b{color:var(--text)}
+    .card{
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid rgba(148,163,184,.18);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute;inset:-40%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(124,58,237,.22), transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(37,99,235,.18), transparent 50%),
+        radial-gradient(circle at 55% 70%, rgba(34,197,94,.12), transparent 55%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .card-inner{position:relative;padding:18px}
+    .mock{
+      aspect-ratio: 10/12;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,.12), transparent 50%),
+        linear-gradient(135deg, rgba(15,23,42,.9), rgba(15,23,42,.55));
+      display:flex;align-items:center;justify-content:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .mock-badge{
+      position:absolute;top:14px;left:14px;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .mock-title{text-align:center;padding:0 18px}
+    .mock-title strong{display:block;font-size:16px}
+    .mock-title span{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
+    .mock-lines{position:absolute;bottom:14px;left:14px;right:14px;display:grid;gap:8px}
+    .line{height:10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+    .line:nth-child(2){width:78%}
+    .line:nth-child(3){width:58%}
+
+    .section{padding:84px 0}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .section-head h2{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.01em}
+    .section-head p{color:var(--muted);max-width:60ch;font-size:14px;line-height:1.6}
+
+    .grid{display:grid;gap:18px}
+    .features{grid-template-columns:repeat(3,1fr)}
+    .feat{
+      padding:18px;border-radius:var(--radius);
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(148,163,184,.16);
+      min-height:160px;
+    }
+    .icon{
+      width:40px;height:40px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      margin-bottom:12px;
+    }
+    .icon i{
+      width:10px;height:10px;border-radius:999px;
+      background:linear-gradient(135deg,var(--accent),var(--accent3));
+      box-shadow:0 0 16px rgba(124,58,237,.35);
+      display:block;
+    }
+    .feat h3{font-size:16px;margin-bottom:8px}
+    .feat p{color:var(--muted);font-size:14px;line-height:1.6}
+
+    footer{
+      padding:26px 0 40px;
+      border-top:1px solid rgba(148,163,184,.12);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .foot{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+
+    @media (max-width: 920px){
+      .hero-wrap{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr}
+      .nav-links{display:none}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+
+  <div class="page">
+    <!-- NAV -->
+    <div class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="#top" aria-label="iCard">
+          <span class="logo-mark" aria-hidden="true"></span>
+          <span>iCard</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Navigation">
+          <a href="#services">Services</a>
+          <a href="#demo">Démo</a>
+          <a href="#tarifs">Tarifs</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a class="btn" href="#demo">Voir une démo</a>
+          <a class="btn btn-primary" href="#contact"><span class="dot"></span> Demander un devis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <header id="top" class="hero">
+      <div class="container hero-wrap">
+        <div>
+          <div class="kicker">
+            <span class="pill">NFC</span>
+            <span>Un tap. Vos coordonnées. Partout.</span>
+          </div>
+
+          <h1>La carte de visite iCard, pensée pour convertir.</h1>
+          <p class="lead">
+            Cartes de visite NFC premium + page contact personnalisée (VCF, liens, réseaux, prise de contact).
+            Moderne, propre, et prête pour l’entreprise.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#tarifs"><span class="dot"></span> Découvrir les packs</a>
+            <a class="btn" href="#demo">Voir un exemple</a>
+          </div>
+
+          <div class="hero-stats">
+            <span><b>1 tap</b> pour enregistrer</span>
+            <span><b>0 app</b> obligatoire</span>
+            <span><b>Page</b> modifiable</span>
+          </div>
+        </div>
+
+        <div class="card" aria-label="Aperçu iCard">
+          <div class="card-inner">
+            <div class="mock">
+              <div class="mock-badge"><span class="dot"></span> Aperçu page contact</div>
+              <div class="mock-title">
+                <strong>Votre Nom</strong>
+                <span>Fonction • Entreprise</span>
+              </div>
+              <div class="mock-lines" aria-hidden="true">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- SERVICES -->
+    <section id="services" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Une expérience simple, un rendu premium.</h2>
+            <p>
+              iCard combine une carte NFC et une page contact professionnelle.
+              L’objectif : partager vos infos en 1 geste et générer des contacts.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid features">
+          <div class="feat">
+            <div class="icon"><i></i></div>
+            <h3>Page contact sur-mesure</h3>
+            <p>Photo, logo, liens, bouton VCF, email, téléphone, LinkedIn, site. Design cohérent avec votre marque.</p>
+          </div>
+          <div class="feat">
+            <div class="icon"><i></i></div>
+            <h3>Configuration NFC</h3>
+            <p>Programmation URL + VCF, compatible iPhone/Android. Sans application obligatoire pour l’utilisateur.</p>
+          </div>
+          <div class="feat">
+            <div class="icon"><i></i></div>
+            <h3>Déploiement entreprise</h3>
+            <p>Multi-profils, cohérence graphique, domaine pro, support et mises à jour.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container foot">
+        <div style="display:flex;gap:10px;align-items:center">
+          <span class="logo-mark" aria-hidden="true" style="width:28px;height:28px;border-radius:10px"></span>
+          <span>© iCard</span>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="#">Mentions légales</a>
+          <a href="#">RGPD</a>
+          <a href="#">CGV</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
