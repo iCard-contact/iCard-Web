@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>iCard — Cartes de visite NFC</title>
-  <meta name="description" content="iCard — Cartes de visite NFC & pages contact. Un tap, vos coordonnées, partout." />
+  <title>iCard — Maintenance</title>
+  <meta name="description" content="iCard est temporairement en maintenance." />
 
   <style>
     :root{
@@ -38,10 +38,8 @@
 
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
-
     .container{max-width:var(--max);margin:0 auto;padding:0 20px}
 
-    /* Overlay bruit : sous le contenu */
     .noise{
       pointer-events:none;
       position:fixed;inset:0;
@@ -61,58 +59,19 @@
       border-bottom:1px solid rgba(148,163,184,.12);
     }
     .nav-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
       padding:14px 0;
     }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:800;
-      letter-spacing:.01em;
-      min-width:0;
-    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.01em;min-width:0}
     .brand span{font-size:16px}
-
-    /* LOGO x5 (base 38px -> 190px) */
     .logo-img{
-      width:190px;               /* x5 */
-      height:190px;              /* x5 */
-      border-radius:24px;
-      object-fit:contain;
+      width:190px;height:190px;border-radius:24px;object-fit:contain;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.18);
       padding:10px;
       box-shadow:0 16px 40px rgba(0,0,0,.25);
       flex:0 0 auto;
     }
-
-    /* Footer logo (aussi x5 mais limité pour rester propre) */
-    .footer-logo{
-      width:min(520px, 92vw);
-      height:auto;
-      border-radius:18px;
-      padding:12px;
-      box-shadow:none;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.10);
-    }
-
-    .nav-links{
-      display:flex;
-      gap:18px;
-      align-items:center;
-      color:var(--muted);
-      font-size:14px;
-      flex-wrap:wrap;
-    }
-    .nav-links a{padding:8px 10px;border-radius:999px}
-    .nav-links a:hover{background:rgba(255,255,255,.06);color:var(--text)}
-    .nav-cta{display:flex;gap:10px;align-items:center;flex:0 0 auto}
 
     /* BTN */
     .btn{
@@ -139,8 +98,8 @@
     }
 
     /* HERO */
-    header.hero{padding:62px 0 24px}
-    .hero-wrap{display:grid;grid-template-columns: 1.25fr .75fr;gap:24px;align-items:stretch}
+    header.hero{padding:72px 0 48px}
+    .hero-wrap{display:grid;grid-template-columns: 1.15fr .85fr;gap:24px;align-items:stretch}
 
     .kicker{
       display:inline-flex;align-items:center;gap:10px;
@@ -191,83 +150,29 @@
     }
     .card-inner{position:relative;padding:18px}
 
-    /* MOCK (aperçu) */
-    .mock{
-      aspect-ratio: 10/12;
+    /* Placeholder “maintenance” à droite */
+    .maint-box{
       border-radius:18px;
       border:1px solid rgba(255,255,255,.14);
       background:
         radial-gradient(circle at 20% 0%, rgba(255,255,255,.12), transparent 50%),
         linear-gradient(135deg, rgba(15,23,42,.9), rgba(15,23,42,.55));
-      position:relative;
-      overflow:hidden;
+      padding:18px;
+      min-height:320px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:10px;
     }
-
-    .mock-badge{
-      position:absolute;top:14px;left:14px;right:14px;
+    .maint-badge{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 10px;border-radius:999px;
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.12);
       color:var(--muted);
       font-size:12px;
-      z-index:2;
+      width:fit-content;
     }
-
-    /* Iframe preview */
-    .preview-wrap{
-      position:absolute;
-      inset:0;
-      padding:54px 12px 12px;
-      z-index:1;
-    }
-
-    .preview-frame{
-      width:100%;
-      height:100%;
-      border:0;
-      border-radius:14px;
-      background:#000;
-      box-shadow:0 18px 55px rgba(0,0,0,.45);
-      overflow:hidden;
-
-      /* petit "zoom out" pour voir + de contenu */
-      transform: scale(0.86);
-      transform-origin: top left;
-
-      /* compense le scale */
-      width:116.3%;
-      height:116.3%;
-    }
-
-    .section{padding:84px 0}
-    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
-    .section-head h2{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.01em}
-    .section-head p{color:var(--muted);max-width:60ch;font-size:14px;line-height:1.6}
-
-    .grid{display:grid;gap:18px}
-    .features{grid-template-columns:repeat(3,1fr)}
-    .feat{
-      padding:18px;border-radius:var(--radius);
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(148,163,184,.16);
-      min-height:160px;
-    }
-    .icon{
-      width:40px;height:40px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      margin-bottom:12px;
-    }
-    .icon i{
-      width:10px;height:10px;border-radius:999px;
-      background:linear-gradient(135deg,var(--accent),var(--accent3));
-      box-shadow:0 0 16px rgba(124,58,237,.35);
-      display:block;
-    }
-    .feat h3{font-size:16px;margin-bottom:8px}
-    .feat p{color:var(--muted);font-size:14px;line-height:1.6}
 
     footer{
       padding:26px 0 40px;
@@ -282,11 +187,8 @@
     @media (max-width: 1020px){
       .logo-img{width:150px;height:150px}
     }
-
     @media (max-width: 920px){
       .hero-wrap{grid-template-columns:1fr}
-      .features{grid-template-columns:1fr}
-      .nav-links{display:none}
       .logo-img{width:120px;height:120px}
     }
   </style>
@@ -296,70 +198,54 @@
   <div class="noise"></div>
 
   <div class="page">
-    <!-- NAV -->
     <div class="nav">
       <div class="container nav-inner">
-        <a class="brand" href="#top" aria-label="iCard">
-          <!-- Logo (5.png doit être au même niveau que index.html) -->
+        <a class="brand" href="#" aria-label="iCard">
           <img src="5.png" alt="iCard" class="logo-img">
           <span>iCard</span>
         </a>
-
-        <nav class="nav-links" aria-label="Navigation">
-          <a href="#services">Services</a>
-          <a href="#demo">Démo</a>
-          <a href="#tarifs">Tarifs</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
         <div class="nav-cta">
-          <a class="btn" href="#demo">Voir une démo</a>
-          <a class="btn btn-primary" href="#contact"><span class="dot"></span> Demander un devis</a>
+          <a class="btn btn-primary" href="mailto:contact@icardgroup.fr"><span class="dot"></span> Contacter le support</a>
         </div>
       </div>
     </div>
 
-    <!-- HERO -->
-    <header id="top" class="hero">
+    <header class="hero">
       <div class="container hero-wrap">
         <div>
           <div class="kicker">
-            <span class="pill">NFC</span>
-            <span>Un tap. Vos coordonnées. Partout.</span>
+            <span class="pill">Statut</span>
+            <span>Maintenance en cours</span>
           </div>
 
-          <h1>La carte de visite iCard, pensée pour convertir.</h1>
+          <h1>On revient très vite.</h1>
           <p class="lead">
-            Cartes de visite NFC premium + page contact personnalisée (VCF, liens, réseaux, prise de contact).
-            Moderne, propre, et prête pour l’entreprise.
+            Le site iCard est temporairement indisponible pour une mise à jour.
+            Merci pour votre patience.
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#tarifs"><span class="dot"></span> Découvrir les packs</a>
-            <a class="btn" href="#demo">Voir un exemple</a>
+            <a class="btn btn-primary" href="mailto:contact@icardgroup.fr"><span class="dot"></span> Nous écrire</a>
+            <a class="btn" href="#" onclick="location.reload();return false;">Rafraîchir</a>
           </div>
 
           <div class="hero-stats">
-            <span><b>1 tap</b> pour enregistrer</span>
-            <span><b>0 app</b> obligatoire</span>
-            <span><b>Page</b> modifiable</span>
+            <span><b>Support :</b> contact@icardgroup.fr</span>
+            <span><b>Retour estimé :</b> à renseigner</span>
           </div>
         </div>
 
-        <div class="card" aria-label="Aperçu iCard">
+        <div class="card" aria-label="Maintenance iCard">
           <div class="card-inner">
-            <div class="mock">
-              <div class="mock-badge"><span class="dot"></span> Aperçu page contact</div>
-
-              <!-- Aperçu réel de ta page contact -->
-              <div class="preview-wrap">
-                <iframe
-                  class="preview-frame"
-                  src="https://icard-contact.github.io/Berenkan-CINKI/"
-                  title="Aperçu iCard — Berenkan CINKI"
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                ></iframe>
+            <div class="maint-box">
+              <div class="maint-badge"><span class="dot"></span> Maintenance</div>
+              <div style="font-size:18px;font-weight:800">Mise à jour du site</div>
+              <div style="color:var(--muted);line-height:1.6">
+                Certaines fonctionnalités sont momentanément désactivées.
+                Si besoin urgent, contactez-nous par email.
+              </div>
+              <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+                <a class="btn" href="mailto:contact@icardgroup.fr">contact@icardgroup.fr</a>
               </div>
             </div>
           </div>
@@ -368,152 +254,11 @@
       </div>
     </header>
 
-    <!-- SERVICES -->
-    <section id="services" class="section">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Une expérience simple, un rendu premium.</h2>
-            <p>
-              iCard combine une carte NFC et une page contact professionnelle.
-              L’objectif : partager vos infos en 1 geste et générer des contacts.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid features">
-          <div class="feat">
-            <div class="icon"><i></i></div>
-            <h3>Page contact sur-mesure</h3>
-            <p>Photo, logo, liens, bouton VCF, email, téléphone, LinkedIn, site. Design cohérent avec votre marque.</p>
-          </div>
-          <div class="feat">
-            <div class="icon"><i></i></div>
-            <h3>Configuration NFC</h3>
-            <p>Programmation URL + VCF, compatible iPhone/Android. Sans application obligatoire pour l’utilisateur.</p>
-          </div>
-          <div class="feat">
-            <div class="icon"><i></i></div>
-            <h3>Déploiement entreprise</h3>
-            <p>Multi-profils, cohérence graphique, domaine pro, support et mises à jour.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DEMO -->
-    <section id="demo" class="section">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Démo</h2>
-            <p>Exemple réel : page contact Berenkan CINKI.</p>
-          </div>
-          <a class="btn" href="https://icard-contact.github.io/Berenkan-CINKI/" target="_blank" rel="noreferrer">Ouvrir la démo</a>
-        </div>
-
-        <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px">
-          <div class="feat">
-            <h3>Page contact</h3>
-            <p>Design moderne, photo, VCF, liens, et CTA. Optimisé mobile.</p>
-            <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-              <a class="btn btn-primary" href="#contact"><span class="dot"></span> Créer la mienne</a>
-              <a class="btn" href="#tarifs">Voir les packs</a>
-            </div>
-          </div>
-          <div class="feat">
-            <h3>Carte NFC</h3>
-            <p>La carte pointe vers une URL : tu peux modifier la page quand tu veux sans reprogrammer la carte.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TARIFS -->
-    <section id="tarifs" class="section">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Tarifs</h2>
-            <p>Remplace ces prix par tes vrais packs.</p>
-          </div>
-        </div>
-
-        <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:18px">
-          <div class="feat">
-            <h3>Starter</h3>
-            <p style="color:var(--muted);margin-top:8px">Carte NFC + page simple.</p>
-            <p style="margin-top:12px;font-size:28px;font-weight:800">29€</p>
-            <div style="margin-top:14px">
-              <a class="btn btn-primary" href="#contact"><span class="dot"></span> Demander</a>
-            </div>
-          </div>
-
-          <div class="feat" style="border-color:rgba(124,58,237,.35);background:rgba(124,58,237,.10)">
-            <h3>Pro</h3>
-            <p style="color:var(--muted);margin-top:8px">Carte NFC + VCF + design premium.</p>
-            <p style="margin-top:12px;font-size:28px;font-weight:800">49€</p>
-            <div style="margin-top:14px">
-              <a class="btn btn-primary" href="#contact"><span class="dot"></span> Demander</a>
-            </div>
-          </div>
-
-          <div class="feat">
-            <h3>Entreprise</h3>
-            <p style="color:var(--muted);margin-top:8px">Multi-profils, charte graphique, support.</p>
-            <p style="margin-top:12px;font-size:28px;font-weight:800">Sur devis</p>
-            <div style="margin-top:14px">
-              <a class="btn" href="#contact">Parler au support</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="section">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Contact</h2>
-            <p>Ajoute ici ton email pro (ex : contact@icardgroup.fr) et un formulaire plus tard.</p>
-          </div>
-        </div>
-
-        <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px">
-          <div class="feat">
-            <h3>Demander un devis</h3>
-            <p>Envoie un message par email, et je te réponds rapidement.</p>
-            <div style="margin-top:14px">
-              <a class="btn btn-primary" href="mailto:contact@icardgroup.fr"><span class="dot"></span> Email direct</a>
-            </div>
-          </div>
-          <div class="feat">
-            <h3>Informations</h3>
-            <p style="color:var(--muted);line-height:1.8;margin-top:10px">
-              <b style="color:var(--text)">Domaine :</b> icardgroup.fr<br>
-              <b style="color:var(--text)">Démo :</b>
-              <a href="https://icard-contact.github.io/Berenkan-CINKI/" target="_blank" rel="noreferrer">
-                icard-contact.github.io/Berenkan-CINKI/
-              </a><br>
-              <b style="color:var(--text)">Support :</b> contact@icardgroup.fr
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
     <footer>
       <div class="container foot">
-        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <img src="5.png" alt="Logo iCard" class="footer-logo">
-          <span>© iCard</span>
-        </div>
+        <span>© iCard — Maintenance</span>
         <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <a href="#">Mentions légales</a>
-          <a href="#">RGPD</a>
-          <a href="#">CGV</a>
+          <a href="mailto:contact@icardgroup.fr">Support</a>
         </div>
       </div>
     </footer>
